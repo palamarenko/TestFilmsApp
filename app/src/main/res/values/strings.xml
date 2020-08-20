@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FilmsViewApp</string>
+    <string name="retry">Повторить?</string>
+    <string name="error_message">Проблемы с интернетом</string>
+</resources>
