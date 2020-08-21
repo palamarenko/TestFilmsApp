@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.filmsviewapp.App
 import com.example.filmsviewapp.io.data.FilmInteractorImpl
 import com.example.filmsviewapp.io.data.FilmsInteractor
+import com.example.filmsviewapp.io.data.FilmsPagingRepository
 import com.example.filmsviewapp.io.rest.ApiFactory
 import com.example.filmsviewapp.io.rest.ApiGet
 import com.example.filmsviewapp.io.rest.Rest
@@ -20,12 +21,14 @@ interface AppComponent {
     val rest: ApiGet
     val applicationContext: Context
     val filmsInteractor : FilmsInteractor
+    val pagingFilmsRepository : FilmsPagingRepository
 
 }
 
 
 val appComponent: AppComponent = App.component
 val filmsInteractor = appComponent.filmsInteractor
+val pagingFilmsRepository = appComponent.pagingFilmsRepository
 
 
 @Module
@@ -41,6 +44,12 @@ class DiModule {
     @Singleton
     internal fun provideUserInteractor(rest: ApiGet): FilmsInteractor {
         return FilmInteractorImpl(rest)
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideFilmsPagingRepository(interactor: FilmsInteractor): FilmsPagingRepository {
+        return FilmsPagingRepository(interactor)
     }
 }
 

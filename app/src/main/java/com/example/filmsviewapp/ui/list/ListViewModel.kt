@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.paging.rxjava2.flowable
 import com.example.filmsviewapp.R
+import com.example.filmsviewapp.io.dagger.pagingFilmsRepository
 import com.example.filmsviewapp.io.data.FilmsPagingSource
 import com.example.filmsviewapp.io.rest.FilmDto
 import com.example.filmsviewapp.ui.base.recler.BaseCell
@@ -21,22 +22,18 @@ class ListViewModel : BaseViewModel() {
     private val navigateLiveData = MutableLiveData<FilmDto>()
 
 
-
     fun loadPagingData(): LiveData<PagingData<BaseCell>> {
-        val pager = Pager(PagingConfig(10), pagingSourceFactory = {
-            return@Pager FilmsPagingSource()
-        })
 
-       return pager.flowable.map {
+        return pagingFilmsRepository.loadPagingData().map {
             it.map { FilmCell(it, this) as BaseCell }
         }.toLiveData()
     }
 
-    fun listenNavigate() : LiveData<FilmDto>{
+    fun listenNavigate(): LiveData<FilmDto> {
         return navigateLiveData
     }
 
-    fun navigateToSingle(dto : FilmDto){
+    fun navigateToSingle(dto: FilmDto) {
         navigateLiveData.postValue(dto)
     }
 }
