@@ -3,9 +3,8 @@ package com.example.filmsviewapp.io.data
 import androidx.paging.rxjava2.RxPagingSource
 import com.example.filmsviewapp.io.dagger.filmsInteractor
 import com.example.filmsviewapp.io.rest.FilmDto
+import com.example.filmsviewapp.ui.base.utils.setSchedulers
 import io.reactivex.Single
-import ua.palamarenko.cozyandroid2.tools.LOG_EVENT
-import ua.palamarenko.cozyandroid2.tools.setSchedulers
 
 class FilmsPagingSource() : RxPagingSource<Int, FilmDto>() {
 

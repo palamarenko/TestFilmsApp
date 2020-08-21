@@ -11,28 +11,32 @@ import androidx.paging.rxjava2.flowable
 import com.example.filmsviewapp.R
 import com.example.filmsviewapp.io.data.FilmsPagingSource
 import com.example.filmsviewapp.io.rest.FilmDto
-import com.example.filmsviewapp.ui.base.BaseViewModel
-import ua.palamarenko.cozyandroid2.CozyCell
-import ua.palamarenko.cozyandroid2.base_fragment.navigation.tasks.taskNavigate
-import ua.palamarenko.cozyandroid2.tools.LOG_EVENT
+import com.example.filmsviewapp.ui.base.recler.BaseCell
+import com.example.filmsviewapp.ui.base.view_model.BaseViewModel
 
 const val DATA = "DATA"
 
 class ListViewModel : BaseViewModel() {
 
+    private val navigateLiveData = MutableLiveData<FilmDto>()
 
 
-    fun loadPagingData(): LiveData<PagingData<CozyCell>> {
+
+    fun loadPagingData(): LiveData<PagingData<BaseCell>> {
         val pager = Pager(PagingConfig(10), pagingSourceFactory = {
             return@Pager FilmsPagingSource()
         })
 
        return pager.flowable.map {
-            it.map { FilmCell(it, this) as CozyCell }
+            it.map { FilmCell(it, this) as BaseCell }
         }.toLiveData()
     }
 
+    fun listenNavigate() : LiveData<FilmDto>{
+        return navigateLiveData
+    }
+
     fun navigateToSingle(dto : FilmDto){
-        taskNavigate(R.id.singlePage, bundleOf(Pair(DATA,dto)))
+        navigateLiveData.postValue(dto)
     }
 }

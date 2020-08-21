@@ -5,13 +5,12 @@ import androidx.room.Room
 import com.example.filmsviewapp.App
 import com.example.filmsviewapp.io.data.FilmInteractorImpl
 import com.example.filmsviewapp.io.data.FilmsInteractor
+import com.example.filmsviewapp.io.rest.ApiFactory
 import com.example.filmsviewapp.io.rest.ApiGet
+import com.example.filmsviewapp.io.rest.Rest
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import ua.palamarenko.cozyandroid2.di.AppModule
-import ua.palamarenko.cozyandroid2.rest.ApiFactory
-import ua.palamarenko.cozyandroid2.rest.Rest
 import javax.inject.Singleton
 
 @Component(modules = [(AppModule::class), (DiModule::class)])
@@ -42,5 +41,15 @@ class DiModule {
     @Singleton
     internal fun provideUserInteractor(rest: ApiGet): FilmsInteractor {
         return FilmInteractorImpl(rest)
+    }
+}
+
+
+@Module
+class AppModule(private val appContext: Context) {
+
+    @Provides
+    internal fun provideContext(): Context {
+        return appContext
     }
 }

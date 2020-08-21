@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <ua.palamarenko.cozyandroid2.CozyRecyclerView2
+    <com.example.filmsviewapp.ui.base.recler.RecyclerViewWithCell
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

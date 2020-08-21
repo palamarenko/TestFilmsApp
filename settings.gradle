@@ -1,4 +1,2 @@
-include ':cozyandroid'
 include ':app'
-project(':cozyandroid').projectDir = new File(rootDir, 'CozyAndroid2/cozyandroid2/')
 rootProject.name = "FilmsViewApp"
